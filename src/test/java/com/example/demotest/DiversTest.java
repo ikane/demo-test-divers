@@ -6,10 +6,12 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.time.temporal.ChronoUnit;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class DiversTest {
 
@@ -42,6 +44,39 @@ class DiversTest {
                                .collect(Collectors.joining(" "));
 
         assertThat(sentence).isEqualToIgnoringCase("Hello Beautiful World");
+    }
+
+    @Test
+    public void testAsync2() throws ExecutionException, InterruptedException {
+        CompletableFuture<String> future1 = CompletableFuture.supplyAsync(() -> "Hello");
+        CompletableFuture<String> future2 = CompletableFuture.supplyAsync(() -> "Beautiful");
+        CompletableFuture<String> future3 = CompletableFuture.supplyAsync(() -> "World");
+
+        CompletableFuture<Void> combinedFuture = CompletableFuture.allOf(future1, future2, future3);
+
+        combinedFuture.get();
+
+        assertThat(future1).isDone();
+        assertThat(future2).isDone();
+        assertThat(future3).isDone();
+    }
+
+    @Test
+    public void testAsyncException() throws ExecutionException, InterruptedException {
+        String name = null;
+        CompletableFuture<String> completableFuture
+                =  CompletableFuture.supplyAsync(() -> {
+            if (name == null) {
+                throw new RuntimeException("Computation error!");
+            }
+            return "Hello, " + name;
+        }).handle((s, t) -> s != null ? s : "Hello, Stranger!");
+        //completableFuture.handle((s, t) -> s != null ? s : "Hello, Stranger!");
+
+        //String s = completableFuture.get();
+        //assertEquals("Hello, Stranger!", s);
+
+        assertEquals("Hello, Stranger!", completableFuture.get());
     }
 
 }
