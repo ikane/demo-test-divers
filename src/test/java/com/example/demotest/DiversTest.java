@@ -56,6 +56,7 @@ class DiversTest {
 
         combinedFuture.get();
 
+
         assertThat(future1).isDone();
         assertThat(future2).isDone();
         assertThat(future3).isDone();
@@ -75,6 +76,8 @@ class DiversTest {
 
         //String s = completableFuture.get();
         //assertEquals("Hello, Stranger!", s);
+
+        System.out.println(2 >> 1);
 
         assertEquals("Hello, Stranger!", completableFuture.get());
     }
