@@ -1,0 +1,4 @@
+demo:
+  period-range:
+    min: "P3D"
+    max: "P5D"

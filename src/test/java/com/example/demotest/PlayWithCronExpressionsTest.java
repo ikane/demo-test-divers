@@ -13,4 +13,18 @@ public class PlayWithCronExpressionsTest {
 		var result = expression.next(LocalDateTime.now());
 		System.out.println(result);
 	}
+
+	@Test
+	void spring_cron_expression_daily() {
+		var expression = CronExpression.parse("@daily");
+		var result = expression.next(LocalDateTime.now());
+		System.out.println(result);
+	}
+
+	@Test
+	void spring_cron_expression_daily2() {
+		var expression = CronExpression.parse("0 0 0 * * *");
+		var result = expression.next(LocalDateTime.now());
+		System.out.println(result);
+	}
 }
