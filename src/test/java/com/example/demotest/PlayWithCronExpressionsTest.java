@@ -27,4 +27,24 @@ public class PlayWithCronExpressionsTest {
 		var result = expression.next(LocalDateTime.now());
 		System.out.println(result);
 	}
+
+	@Test
+	void spring_cron_expression_test2() {
+		var expression = CronExpression.parse("0 * * * * *");
+		var result = expression.next(LocalDateTime.now());
+		System.out.println(result);
+	}
+	@Test
+	void spring_cron_expression_every_5s() {
+		var expression = CronExpression.parse("* 0/5 * * * *");
+		var result = expression.next(LocalDateTime.now());
+		System.out.println(result);
+	}
+
+	@Test
+	void spring_cron_expression_reboot() {
+		var expression = CronExpression.parse("@daily");
+		var result = expression.next(LocalDateTime.now());
+		System.out.println(result);
+	}
 }

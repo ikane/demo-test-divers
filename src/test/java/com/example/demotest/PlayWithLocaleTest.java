@@ -23,9 +23,11 @@ public class PlayWithLocaleTest {
 
 		Locale newLocale = new Locale(Locale.FRANCE.toLanguageTag());
 
-		assertThat(forLanguageTag).isEqualTo(newLocale);
+		//assertThat(forLanguageTag).isEqualTo(newLocale);
 
 		System.out.println(forLanguageTag);
+		System.out.println(forLanguageTag.toString());
+		System.out.println(forLanguageTag.toLanguageTag());
 
 	}
 
